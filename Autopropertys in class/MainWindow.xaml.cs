@@ -40,7 +40,7 @@ namespace Autopropertys_in_class
 
         private void PrintResult()
         {
-            InputBox.Text = "";
+            NameInputBox.Text = AgeInputBox.Text = IDInputBox.Text = "";
             OutputBox.Text = "";
             for (int i = 0; i < recordCount; i++)
             {
@@ -52,25 +52,24 @@ namespace Autopropertys_in_class
         {
             if(recordCount < maxRecordCount)
             {
-                string[] parts = (InputBox.Text).Trim().Split(new char[] { ' ', '\t', ',', ';', ':' }, StringSplitOptions.RemoveEmptyEntries);
-                if (int.TryParse(parts[1], out int age))
+                if (int.TryParse(AgeInputBox.Text, out int age))
                 {
-                    Data[recordCount].Name = parts[0]; 
+                    Data[recordCount].Name = NameInputBox.Text; 
                     Data[recordCount].Age = age;
                     OutputBox.Text += $"ID: {recordCount}, Name: {Data[recordCount].Name}, Age: {Data[recordCount].Age}\n";
-                    InputBox.Text = "";
+                    AgeInputBox.Text = NameInputBox.Text = "";
                     recordCount += 1;
                 }
                 else
                 {
-                    InputBox.Text = "Invalid age";
+                    AgeInputBox.Text = "Invalid age";
                 }
                     
             }
 
             else
             {
-                InputBox.Text = "No space left";
+                NameInputBox.Text = "No space left";
             }
             
         }
@@ -113,19 +112,21 @@ namespace Autopropertys_in_class
 
         private void Search_Age_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(InputBox.Text, out int Age))
+            if (int.TryParse(AgeInputBox.Text, out int Age))
             {
                 for(int i = 0; i < recordCount; i++)
                 {
                     if (Data[i].Age == Age)
                     {
-                        InputBox.Text = $"ID: {i}, Name: {Data[i].Name}, Age: {Data[i].Age}";
+                        IDInputBox.Text = $"{i}";
+                        NameInputBox.Text = $"{Data[i].Name}";
+                        AgeInputBox.Text = $"{Data[i].Age}";
                     }
                 }
             }
             else
             {
-                InputBox.Text = "Invalid Age";
+                AgeInputBox.Text = "Invalid";
             }
 
         }
@@ -133,18 +134,20 @@ namespace Autopropertys_in_class
         private void Search_Name_Button_Click(object sender, RoutedEventArgs e)
         {
             bool nameFound = false;
-            Name = InputBox.Text;
+            Name = NameInputBox.Text;
             for (int i = 0; i < recordCount; i++)
             {
                 if (Name == Data[i].Name)
                 {
                     nameFound = true;
-                    InputBox.Text = $"ID: {i}, Name: {Data[i].Name}, Age: {Data[i].Age}";
+                    IDInputBox.Text = $"{i}";
+                    NameInputBox.Text = $"{Data[i].Name}";
+                    AgeInputBox.Text = $"{Data[i].Age}";
                 }
             }
             if (!nameFound)
             {
-                InputBox.Text = "No such person in DataBase";
+                NameInputBox.Text = "No person";
             }
                     
         }
@@ -152,22 +155,24 @@ namespace Autopropertys_in_class
         private void Delete_ID_Button_Click(object sender, RoutedEventArgs e)
         {
 
-            if (int.TryParse(InputBox.Text, out int ID) && ID < recordCount)
+            if (int.TryParse(IDInputBox.Text, out int ID) && ID < recordCount)
             {
                 for (int i = ID; i < recordCount - 1; i++)
                 {
-                    Data[ID].Name = Data[ID + 1].Name;
-                    Data[ID].Age = Data[ID + 1].Age;
+                    temp[0] = Data[i];
+                    Data[i] = Data[i + 1];
+                    Data[i + 1] = temp[0];
                 }
 
-                recordCount--;
+                --recordCount;
                 PrintResult();
             }
             else
             {
-                InputBox.Text = "Invalid ID";
+                IDInputBox.Text = "Invalid";
             }
         }
+
     }
 }
 
