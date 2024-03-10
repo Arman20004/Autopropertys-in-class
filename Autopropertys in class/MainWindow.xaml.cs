@@ -1,14 +1,38 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 
 namespace Autopropertys_in_class
-{    
+{
+  
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public int ID { get; set; }
+
+
+    }
     public partial class MainWindow : Window
     {
+        static T[] InitializeArray<T>(int length) where T : new()
+        {
+            T[] array = new T[length];
+            for (int i = 0; i < length; ++i)
+            {
+                array[i] = new T();
+            }
+
+            return array;
+        }
+
         static int maxRecordCount = 17;
         int recordCount = 0;
-        (string Name, int Age)[] Data = new (string Name, int Age)[maxRecordCount];
-        (string Name, int Age)[] temp = new (string Name, int Age)[maxRecordCount];
+ 
+        Person[] Data = InitializeArray<Person>(maxRecordCount);
+        Person[] temp = new Person[1];
+
+        
         public MainWindow()
         {
             InitializeComponent();
