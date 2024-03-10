@@ -8,7 +8,7 @@ namespace Autopropertys_in_class
         static int maxRecordCount = 17;
         int recordCount = 0;
         (string Name, int Age)[] Data = new (string Name, int Age)[maxRecordCount];
-        (string Name, int Age)[] temp = new (string Name, int Age)[maxRecordCount];
+        (string Name, int Age)[] temp = new (string Name, int Age)[1];
         public MainWindow()
         {
             InitializeComponent();
